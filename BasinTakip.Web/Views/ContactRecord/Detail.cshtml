@@ -1,0 +1,118 @@
+﻿@model ContactRecordDetailModel
+
+@{
+    ViewBag.Title = "Temas Kaydı Ekle/Düzenle";
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+}
+<style>
+   .input-group1{    position: relative;
+    /* width: 100%; */
+    display: table;
+    border-collapse: separate;}
+   .input-group-addon{
+           background-color: transparent !important;
+    color: #000 !important;
+    border: none;
+    vertical-align: bottom;
+   }
+</style>
+<div class="box box-block bg-white">
+    @using (Html.BeginForm(actionName, controllerName, FormMethod.Post))
+    {
+        <form>
+            <div class="row">
+                <div class="form-group col-lg-4">
+                    @Html.Label("Yayın")
+                    @Html.DropDownListFor(p => p.EditionId, Model.EditionTypeList, "", new { @class = "form-control control-inputs",@required="required" })
+                    @Html.ValidationMessageFor(model => model.EditionId,"",new { @class="text-danger"})
+                </div>
+                <div class="form-group col-lg-4">
+                    @Html.Label("Basın Mensubu")
+                    @Html.DropDownListFor(p => p.PressMemberId, Model.PressMemberList, "", new
+               {
+                   @class = "form-control control-inputs depended-select",
+                   @required = "required",
+                   dataUrl = "/api/common/pressmember",
+                   dependedElement = "#EditionId"
+               })
+                    @Html.ValidationMessageFor(model => model.PressMemberId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-lg-4">
+                    @Html.Label("Temas Türü")
+                    @Html.DropDownListFor(p => p.ContactKindId, Model.ContactKindList, new {@class= "form-control control-inputs ContactTypeSelect" ,@id="ContactTypeSelectId", @required = "required" })
+                    @*<select class="form-control control-inputs ContactTypeSelect" id="ContactTypeSelectId">
+                        <option value="1">Etkinlik</option>
+                        <option value="2">Araç Tahsisi</option>
+                    </select>*@
+                    @Html.ValidationMessageFor(model => model.ContactKindId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-4">
+                    @Html.Label("LCV")
+                    @Html.DropDownListFor(p => p.LcvId, Model.LCVList, "", new { @class = "form-control control-inputs" })
+                </div>
+                <div class="form-group col-lg-4">
+                    @Html.Label("Katılım Durumu")
+                    @Html.DropDownListFor(p => p.participationStatus, Model.participationStatusList, "", new { @class = "form-control control-inputs" })
+                </div>
+                <div class="form-group col-lg-4">
+                    @Html.Label("Etkinlik Türü",new { @id="lbltemas"}) @Html.Label("Araç", new {@style="display:none;",@id="lblarac"})
+                    @Html.DropDownListFor(p => p.ContactTypeId, Model.ContactTypeList,"", new
+               {
+                   @required = "required",
+                   @class = "form-control control-inputs",
+                   dataurl = "/api/common/dataTest",
+                   dependedElement = "#ContactTypeSelectId"
+               })
+                    @Html.ValidationMessageFor(model => model.ContactTypeId, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="row">
+                @*<div class="form-group col-lg-4">
+                    @Html.Label("Temas Başlangıç Tarihi")
+                    @Html.TextBoxFor(p => p.ContactDate,"{0:dd.MM.yyyy}", new { @class = "form-control control-inputs mydatepicker", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.ContactDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-lg-4">
+                    @Html.Label("Temas Bitiş Tarihi")
+                    @Html.TextBoxFor(p => p.ContactEndDate, "{0:dd.MM.yyyy}", new { @class = "form-control control-inputs mydatepicker" })
+                   
+                </div>*@
+                <div class="input-daterange input-group1 form-group  col-lg-8" id="date-range">
+                    @Html.Label("Temas Başlangıç Tarihi")
+                    @Html.TextBoxFor(p => p.ContactDate, "{0:dd.MM.yyyy}", new { @class = "form-control control-inputs mydatepicker", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.ContactDate, "", new { @class = "text-danger" })
+                    <span class="input-group-addon bg-primary b-0 text-white">to</span>
+                    @Html.Label("Temas Bitiş Tarihi")
+                    @Html.TextBoxFor(p => p.ContactEndDate, "{0:dd.MM.yyyy}", new { @class = "form-control control-inputs mydatepicker" })
+                </div>
+                <div class="form-group col-lg-4 contacttypeSub">
+                    @Html.Label("Temas Şekli Alt Kategori")
+                    @Html.DropDownListFor(p => p.ContactTypeSubId, Model.ContactTypeSubCategoryList, new
+               {
+                   @class = "form-control control-inputs depended-select",
+                   dataUrl = "/api/common/picklist",
+                   dependedElement = "#ContactTypeId"
+               })
+                </div>
+            </div>
+           
+
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    @Html.Label("Temas Notları")
+                    @Html.TextAreaFor(x => x.Notes, new { @class = "form-control control-inputs form-control-textarea" })
+                </div>
+            </div>
+          
+            @Html.HiddenFor(p => p.Id)
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </form>
+    }
+</div>

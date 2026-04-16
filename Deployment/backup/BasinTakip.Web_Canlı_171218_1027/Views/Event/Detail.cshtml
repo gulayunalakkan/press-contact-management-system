@@ -1,0 +1,215 @@
+﻿@model EventDetailModel
+
+@{
+    ViewBag.Title = "Etkinlik Ekle/Düzenle";
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+}
+<style>
+    .particial a{
+        color:red;
+    }
+    .particialnone{
+        color:yellow;
+    }
+</style>
+<div class="box box-block bg-white">
+
+    @using (Html.BeginForm(actionName, controllerName, FormMethod.Post))
+    {
+        <form>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.Name)
+                    @Html.TextBoxFor(p => p.Name, new { @class = "form-control control-inputs",@required="required" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.EventTypeId)
+                    @Html.DropDownListFor(p => p.EventTypeId, Model.EventTypeList,"", new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.EventTypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.BeginDate)
+
+
+                    @if (Model.BeginDate == DateTime.MinValue)
+                    {
+                        @Html.TextBoxFor(p => p.BeginDate, "{0:dd.MM.yyyy}", new { Value="",@class = "form-control control-inputs mydatepicker", @required = "required" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(p => p.BeginDate, "{0:dd.MM.yyyy}", new { @class = "form-control control-inputs mydatepicker", @required = "required" })
+
+                    }
+                    @Html.ValidationMessageFor(model => model.BeginDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.EndDate)
+
+                    @if (Model.BeginDate == DateTime.MinValue)
+                    {
+                        @Html.TextBoxFor(p => p.EndDate, "{0:dd.MM.yyyy}", new { Value = "", @class = "form-control control-inputs mydatepicker", @required = "required" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(p => p.EndDate, "{0:dd.MM.yyyy}", new { @class = "form-control control-inputs mydatepicker", @required = "required" })
+                    }
+                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.EventPlace)
+                    @Html.TextAreaFor(p => p.EventPlace, new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.EventPlace, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.EventAdress)
+                    @Html.TextAreaFor(p => p.EventAdress, new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.EventAdress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    @Html.LabelFor(p => p.EventNotes)
+                    @Html.TextAreaFor(p => p.EventNotes, new { @class = "form-control control-inputs form-control-textarea", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.EventNotes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+          
+            @Html.HiddenFor(p => p.Id)
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </form>
+        <div style="padding:20px 0;">
+            @Html.Label("Temas Geçmişi", new { @class = "form-control control-inputs", @style = "font-weight: bold;"})
+            <div class="row">
+                @foreach (var item in Model.ContactRecordBackList.ToList())
+                {
+                    if (item.particialName == "Katıldı")
+                    {
+                        <div class="form-group col-lg-3">
+                            <label>
+                                @Html.ActionLink(item.firstNamelastName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label>
+                                @Html.ActionLink(item.EditionName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label>
+                                @Html.ActionLink(item.Note, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label>
+                                @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                          
+                                <label>
+                                    @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                                </label>
+
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label>
+                                @Html.ActionLink(item.date.ToShortDateString(), "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                    }
+                }
+                @foreach (var item in Model.ContactRecordBackList.ToList())
+                {
+                    if (item.particialName == "Katılmadı")
+                    {
+                        <div class="form-group col-lg-3">
+                            <label class="particial">
+                                @Html.ActionLink(item.firstNamelastName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label class="particial">
+                                @Html.ActionLink(item.EditionName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="particial">
+                                @Html.ActionLink(item.Note, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particial">
+                                @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                                <label class="particial">
+                                    @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                                </label>
+
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label class="particial">
+                                @Html.ActionLink(item.date.ToShortDateString(), "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                    }
+                }
+                    @foreach (var item in Model.ContactRecordBackList.ToList())
+                    {
+                        if (item.particialName != "Katılmadı" && item.particialName != "Katıldı")
+                        {
+
+                            <div class="form-group col-lg-3">
+                                <label class="particialnone">
+                                    @Html.ActionLink(item.firstNamelastName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label class="particialnone">
+                                    @Html.ActionLink(item.EditionName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label class="particialnone">
+                                    @Html.ActionLink(item.Note, "Detail", "ContactRecord", new { id = item.Id }, null)
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-1">
+                                <label class="particialnone">
+                                    @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-1">
+                                <label class="particialnone">
+                                    @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                                </label>
+
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label class="particialnone">
+                                    @Html.ActionLink(item.date.ToShortDateString(), "Detail", "ContactRecord", new { id = item.Id }, null)
+                                </label>
+                            </div>
+                        }
+                    }
+                
+            </div>
+            <div class="row">
+                <a href="/Export/ContactBackEventReport?id=@Model.Id" class="btn btn-danger label-left btn-export btn-export-contactBack" style="@ViewBag.Export">
+                    <span class="btn-label"><i class="ti-download"></i></span>
+                    Excele Aktar
+                </a>
+            </div>
+        </div>
+    }
+</div>

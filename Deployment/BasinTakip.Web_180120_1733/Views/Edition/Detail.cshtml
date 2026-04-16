@@ -1,0 +1,180 @@
+﻿@model EditionDetailModel
+
+@{
+    ViewBag.Title = "Yayın Ekle/Düzenle";
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+}
+<style>
+    .particial a {
+        color: red;
+    }
+    .particialnone{
+        color:yellow;
+    }
+</style>
+<div class="box box-block bg-white">
+
+    @using (Html.BeginForm(actionName, controllerName, FormMethod.Post))
+    {
+        <form>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.Name)
+                    @Html.TextBoxFor(p => p.Name, new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+
+                </div>
+                <div class="form-group col-lg-6">
+                    @Html.Label("Yayın Türü")
+                    @Html.DropDownListFor(p => p.EditionTypeId, Model.EditionTypeList,"", new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.EditionTypeId, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+           
+            <div class="form-group">
+                @Html.LabelFor(p => p.Adress)
+                @Html.TextAreaFor(p => p.Adress, new { @class = "form-control control-inputs", @required = "required" })
+                @Html.ValidationMessageFor(model => model.Adress, "", new { @class = "text-danger" })
+
+            </div>
+         
+            @Html.HiddenFor(p => p.Id)
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </form>
+
+        <div style="padding:20px 0; font-size:10px;">
+            @Html.Label("Yayına Bağlı Basın Mensupları ve Temas Geçmişi", new { @class = "form-control control-inputs", @style = "font-weight: bold;" })
+            <div class="row">
+                @foreach (var item in Model.EditionWithPressMember)
+                {
+                    if (item.particialName == "Katılmadı")
+                    {
+                        if (item.ContactId == 0)
+                        {
+                            <div class="form-group col-lg-2">
+                                <label class="particial">
+                                    @Html.ActionLink(item.firstNamelastName.Length >= 25 ? item.firstNamelastName.Substring(0, 25) + ".." : item.firstNamelastName, "Detail", "Person", new { id = item.Id }, null)
+                                </label>
+                            </div>
+
+                            <div class="form-group col-lg-1" style="padding:0;">
+                                <label class="particial">
+                                    @Html.ActionLink(item.ContactTypeName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-4" style="padding:0;">
+                                <label class="particial">
+                                    @Html.ActionLink(item.ContactSubName.Length >= 45 ? item.ContactSubName.Substring(0, 45) + ".." : item.ContactSubName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <label class="particial">
+                                    @Html.ActionLink(item.Note.Length >= 25 ? item.Note.Substring(0, 25) + ".." : item.Note, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-1">
+                                <label class="particial">
+                                    @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-1">
+                                <label class="particial">
+                                    @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                                </label>
+                            </div>
+                            <div class="form-group col-lg-1">
+                                <label class="particial">
+                                    @Html.ActionLink(item.date.ToShortDateString(), "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                                </label>
+                            </div>
+                        }
+                        <div class="form-group col-lg-2">
+                            <label class="particial">
+                                @Html.ActionLink(item.firstNamelastName.Length >= 25 ? item.firstNamelastName.Substring(0, 25) + ".." : item.firstNamelastName, "Detail", "Person", new { id = item.Id }, null)
+                            </label>
+                        </div>
+
+                        <div class="form-group col-lg-1" style="padding:0;">
+                            <label class="particial">
+                                @Html.ActionLink(item.ContactTypeName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-4" style="padding:0;">
+                            <label class="particial">
+                                @Html.ActionLink(item.ContactSubName.Length >= 45 ? item.ContactSubName.Substring(0, 45) + ".." : item.ContactSubName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label class="particial">
+                                @Html.ActionLink(item.Note.Length >= 25 ? item.Note.Substring(0, 25) + ".." : item.Note, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particial">
+                                @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particial">
+                                @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particial">
+                                @Html.ActionLink(item.date.ToShortDateString(), "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group col-lg-2" >
+                            <label>
+                                @Html.ActionLink(item.firstNamelastName.Length >= 25 ? item.firstNamelastName.Substring(0, 25) + ".." : item.firstNamelastName, "Detail", "Person", new { id = item.Id }, null)
+                            </label>
+                        </div>
+
+                        <div class="form-group col-lg-1" style="padding:0;">
+                            <label>
+                                @Html.ActionLink(item.ContactTypeName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-4" style="padding:0;">
+                            <label>
+                                @Html.ActionLink(item.ContactSubName.Length >= 55 ? item.ContactSubName.Substring(0, 55) + ".." : item.ContactSubName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label>
+                                @Html.ActionLink(item.Note.Length >= 25 ? item.Note.Substring(0, 25) + ".." : item.Note, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label>
+                                @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label>
+                                @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label>
+                                @Html.ActionLink(item.date.ToShortDateString(), "Detail", "ContactRecord", new { id = item.ContactId }, null)
+                            </label>
+                        </div>
+                    }
+
+                }
+
+            </div>
+        
+        </div>
+    }
+</div>

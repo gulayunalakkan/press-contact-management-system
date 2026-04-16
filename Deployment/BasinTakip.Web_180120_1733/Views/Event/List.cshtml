@@ -1,0 +1,166 @@
+﻿@model GenericListOutput<EventResult, int>
+
+@{
+    ViewBag.Title = "Etkinlik Listeleme";
+    Layout = "~/Views/Shared/_ListLayout.cshtml";
+}
+<div class="box box-block bg-white">
+    <div class="dataTables_wrapper form-inline dt-bootstrap4">
+        <div class="row" style="background-color:#212330; height:85px;margin-top: -16px; color:#fff;">
+            <form method="get" action="@Url.Action("List","Event")" class="col-lg-12 filtreleme filtreleme-Event">
+                <div class="col-lg-2" style="padding: 19px 0px 0;">
+                    <i class="fa fa-search" aria-hidden="true"> </i>  <input type="text" name="SearchText" value="@Model.filter[4]" style="background-color: #212330;color:#fff;width:125px;" placeholder="Arama" />
+                </div>
+                <div class="col-lg-1 form-controls">
+                    <h5>Filtreleme</h5>
+                </div>
+                <div class="col-lg-3 form-controls">
+                    <div>
+                        <h4>Başlangıç </h4>
+                    </div>
+                    <div>
+                        <select name="BeginYear">
+                            <option value="">Yıl</option>
+                            <option @Html.Raw(Model.filter[0]=="2017"?"selected":"") value="2017">2017</option>
+                            <option @Html.Raw(Model.filter[0]=="2018"?"selected":"") value="2018">2018</option>
+                            <option @Html.Raw(Model.filter[0]=="2019"?"selected":"") value="2019">2019</option>
+                            <option @Html.Raw(Model.filter[0]=="2020"?"selected":"") value="2020">2020</option>
+                        </select>
+                        <select name="BeginMonth">
+                            <option value="">Ay</option>
+                            <option @Html.Raw(Model.filter[5]=="1"?"selected":"") value="01">Ocak</option>
+                            <option @Html.Raw(Model.filter[5]=="2"?"selected":"") value="02">Şubat</option>
+                            <option @Html.Raw(Model.filter[5]=="3"?"selected":"") value="03">Mart</option>
+                            <option @Html.Raw(Model.filter[5]=="4"?"selected":"") value="04">Nisan</option>
+                            <option @Html.Raw(Model.filter[5]=="5"?"selected":"") value="05">Mayıs</option>
+                            <option @Html.Raw(Model.filter[5]=="6"?"selected":"") value="06">Haziran</option>
+                            <option @Html.Raw(Model.filter[5]=="7"?"selected":"") value="07">Temmuz</option>
+                            <option @Html.Raw(Model.filter[5]=="8"?"selected":"") value="08">Ağustos</option>
+                            <option @Html.Raw(Model.filter[5]=="9"?"selected":"") value="09">Eylül</option>
+                            <option @Html.Raw(Model.filter[5]=="10"?"selected":"") value="10">Ekim</option>
+                            <option @Html.Raw(Model.filter[5]=="11"?"selected":"") value="11">Kasım</option>
+                            <option @Html.Raw(Model.filter[5]=="12"?"selected":"") value="12">Aralık</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 form-controls">
+                    <div>
+                        <h4>Etkinlik Yeri </h4>
+                    </div>
+                    <div>
+                        <select name="EventPlace" >
+                            <option value="">Etkinlik Yeri</option>
+                            @foreach (var item in ViewBag.eventList)
+                            {
+                                if (Model.filter[2] == item)
+                                {
+                                    <option selected value="@item">@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 form-controls">
+                    <div>
+                        <h4>Etkinlik Türü </h4>
+                    </div>
+                    <div>
+                        <select name="EventType">
+                            <option value="">Etkinlik Türü</option>
+
+                            @foreach (var item in ViewBag.eventTypeList)
+                            {
+                                if (item.Id.ToString() == Model.filter[3])
+                                {
+                                    <option selected value="@item.Id">@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+
+                            }
+
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-lg-1" style="float:right;">
+                    <button class="btn" type="submit">Uygula </button>
+                </div>
+            </form>
+            <input type="hidden" name="QueryString" value="@ViewBag.QueryString" />
+        </div>
+        <div class="row">
+            <a href="/Export/EventReport?@ViewBag.QueryString" class="btn btn-danger label-left btn-export btn-export-event">
+                <span class="btn-label"><i class="ti-download"></i></span>
+                Excele Aktar
+            </a>
+            <div style="padding: 5px 0;">
+                <a href="Calendar" style="float:right; background-color:#212330;color:#fff;margin-bottom:7px;" class="btn">Etkinlik Takvimi </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped mb-md-0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="Name">Etkinlik Adı</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="EventPlace">Etkinlik Yeri</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="EventTYpeName">Etkinlik Türü</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="BeginDate">Etkinlik Tarihi</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="Count">Temas Kurulan Kişi Sayısı</a></th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+@if (Model.PagedData != null)
+{
+                        for (int i = 0; i < Model.PagedData.Count; i++)
+                        {
+                            var item = Model.PagedData[i];
+
+                            <tr>
+                                <th scope="row">@(i + 1)</th>
+                                <td>@Html.ActionLink(item.Name, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.EventPlace, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.EventTypeName, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.BeginDate.ToString("dd/MM/yyyy") + " - " + item.EndDate.ToString("dd/MM/yyyy"), "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.Count.ToString(), "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "delete", onclick = "return confirm('Etkinliği silmek istediğinizden emin misiniz?');" })</td>
+                            </tr>
+                        }
+}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+@if (Model.PagedData != null)
+{
+            <div class="col-md-5">
+                
+
+                <div class="dataTables_info">
+                  
+                    @Model.PagedData.TotalItemCount Sonuçtan @(Model.PagedData.PageCount <= 0 ?
+                    0 : 1) ile @Model.PagedData.Count() arası gösteriliyor
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers">
+                    @Html.PagedListPager(Model.PagedData, pageNumber => Url.Action("List", new { pageNumber, BeginYear=Model.filter[0], EndYear = Model.filter[1], EventPlace = Model.filter[2], EventType = Model.filter[3], SearchText = Model.filter[4],BeginMonth=Model.filter[5],EndMonth=Model.filter[6], orderByColumn = Model.filter[7], OrderType = Model.filter[8] }))
+                </div>
+            </div>
+
+}
+        </div>
+    </div>
+</div>

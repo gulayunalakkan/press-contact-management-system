@@ -1,0 +1,104 @@
+﻿@model GenericListOutput<EditionResult, int>
+
+@{
+    ViewBag.Title = "Yayın Listeleme";
+    Layout = "~/Views/Shared/_ListLayout.cshtml";
+}
+<div class="box box-block bg-white">
+    <div class="dataTables_wrapper form-inline dt-bootstrap4">
+        <div class="row" style="background-color:#212330; height:85px;margin-top: -16px; color:#fff;">
+            <form method="get" action="@Url.Action("List","Edition")" class="col-lg-12 filtreleme  filtreleme-Edition">
+                <div class="col-lg-3" style="padding: 19px 0px 0;">
+                    <i class="fa fa-search" aria-hidden="true"> </i>  <input type="text" name="SearchText" value="" style="background-color: #212330;color:#fff;" placeholder="Arama" />
+                </div>
+                <div class="col-lg-2 form-controls">
+                    <h5>Filtreleme</h5>
+                </div>
+
+                <div class="col-lg-3 form-controls">
+                    <div>
+                        <h4 style="width:100%;">Yayın Adı </h4>
+                    </div>
+                    <div>
+                        <select name="EditionId">
+                            <option value="">Yayın Adı</option>
+                            @foreach (var item in ViewBag.EditionList)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 form-controls">
+                    <div>
+                        <h4 style="width:100%;">Yayın Türü </h4>
+                    </div>
+                    <div>
+                        <select name="EditionTypeId">
+                            <option value="">Yayın Türü</option>
+                            @foreach (var item in ViewBag.EditionTypeList)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                          
+
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-lg-1" style="float:right;">
+                    <button class="btn" type="submit">Uygula </button>
+                </div>
+            </form>
+            <input type="hidden" name="QueryString" value="@ViewBag.QueryString" />
+        </div>
+        <div class="row">
+            <a href="/Export/EditionReport" class="btn btn-danger label-left btn-export btn-export-vehicle">
+                <span class="btn-label"><i class="ti-download"></i></span>
+                Excele Aktar
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped mb-md-0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="Name">Yayın Adı</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="EditionTypeName">Yayın Türü</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="Adress">Adres</a></th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.PagedData.Count; i++)
+                        {
+                            var item = Model.PagedData[i];
+
+                            <tr>
+                                <th scope="row">@(i + 1)</th>
+                                <td>@Html.ActionLink(item.Name, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.EditionTypeName, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.Adress, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "delete", onclick = "return confirm('Yayın Kaydını silmek istediğinizden emin misiniz?');" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="dataTables_info">
+                    @Model.PagedData.TotalItemCount Sonuçtan @(Model.PagedData.PageCount <= 0 ?
+                    0 : 1) ile @Model.PagedData.Count() arası gösteriliyor
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers">
+                    @Html.PagedListPager(Model.PagedData, pageNumber => Url.Action("List", new { pageNumber }))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @Html.Partial("Partial/Meta")
+    @RenderSection("meta", required: false)
+</head>
+<body class="fixed-sidebar fixed-header skin-default content-appear">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        <div class="preloader"></div>
+
+        <!-- Sidebar -->
+        <div class="site-overlay"></div>
+        @Html.Partial("Partial/Sidebar")
+
+        @Html.Partial("Partial/Header")
+
+        <div class="site-content">
+            <!-- Content -->
+            <div class="content-area py-1">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+            @Html.Partial("Partial/Footer")
+        </div>
+    </div>
+
+    @Html.Partial("Partial/Scripts")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

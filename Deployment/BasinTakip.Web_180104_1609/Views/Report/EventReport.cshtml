@@ -1,0 +1,45 @@
+﻿@model PastContactRecordReportModel
+@{
+    ViewBag.Title = "Kurumsal İletişim Basın Temas Takip Sistemi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EventReport</title>
+</head>
+<body>
+    <div class="box box-block bg-white">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped mb-md-0">
+                    <thead class="table-thead-title">
+                        <tr>
+                            <td colspan="4" style="border:none;float:left;padding: 0 5px 12px 0;">Yaklaşan Etkinlikler </td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UpComingEVentList)
+            {
+                            <tr>
+                             <td> @Html.ActionLink(item.EventName, "Detail", "Event", new { id = item.Id }, null) </td> 
+                                <td>@Html.ActionLink(item.EventPlacename, "Detail", "Event", new { id = item.Id }, null)</td>
+                                <td>@Html.ActionLink(item.EventTypeName, "Detail", "Event", new { id = item.Id }, null)</td>
+                                <td>@Html.ActionLink(item.EventDate.ToString("dd/MM/yyyy"), "Detail", "Event", new { id = item.Id }, null) </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

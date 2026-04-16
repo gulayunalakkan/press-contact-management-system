@@ -1,0 +1,148 @@
+﻿@model GenericListOutput<ContactRecordResult, int>
+
+@{
+    ViewBag.Title = "Temas Kaydı Listeleme";
+    Layout = "~/Views/Shared/_ListLayout.cshtml";
+}
+<div class="box box-block bg-white">
+    <div class="dataTables_wrapper form-inline dt-bootstrap4">
+        <div class="row" style="background-color:#212330; height:85px;margin-top: -16px; color:#fff;">
+            
+            <form method="get" action="@Url.Action("List","ContactRecord")" class="col-lg-12 filtreleme filtreleme-Contact">
+                <div class="col-lg-2" style="padding: 19px 0px 0;">
+                    <i class="fa fa-search" aria-hidden="true"> </i>  <input type="text" name="SearchText" value="@Model.filter[6]" style="width: 130px;background-color: #212330;color:#fff;" placeholder="Arama" />
+                </div>
+                <div class="col-lg-1 form-controls">
+                    <h5>Filtreleme</h5>
+
+                </div>
+                <div class="col-lg-3 form-controls">
+                    <div>
+                        <h4>Başlangıç </h4>
+                    </div>
+                    <div>
+                        <select name="BeginYear">
+                            <option value="">Yıl</option>
+                            <option  @Html.Raw(Model.filter[0]=="2017"?"selected":"")  value="2017">2017</option>
+                            <option  @Html.Raw(Model.filter[0]=="2018"?"selected":"")  value="2018">2018</option>
+                            <option  @Html.Raw(Model.filter[0]=="2019"?"selected":"")  value="2019">2019</option>
+                            <option  @Html.Raw(Model.filter[0]=="2020"?"selected":"")  value="2020">2020</option>
+                        </select>
+                        <select name="BeginMonth">
+                            <option value="">Ay</option>
+                            <option @Html.Raw(Model.filter[1] == "1" ? "selected" : "") value="1">Ocak</option>
+                            <option @Html.Raw(Model.filter[1] == "2" ? "selected" : "") value="2">Şubat</option>
+                            <option @Html.Raw(Model.filter[1] == "3" ? "selected" : "") value="3">Mart</option>
+                            <option @Html.Raw(Model.filter[1] == "4" ? "selected" : "") value="4">Nisan</option>
+                            <option @Html.Raw(Model.filter[1] == "5" ? "selected" : "") value="5">Mayıs</option>
+                            <option @Html.Raw(Model.filter[1] == "6" ? "selected" : "") value="6">Haziran</option>
+                            <option @Html.Raw(Model.filter[1] == "7" ? "selected" : "") value="7">Temmuz</option>
+                            <option @Html.Raw(Model.filter[1] == "8" ? "selected" : "") value="8">Ağustos</option>
+                            <option @Html.Raw(Model.filter[1] == "9" ? "selected" : "") value="9">Eylül</option>
+                            <option @Html.Raw(Model.filter[1] == "10" ? "selected" : "") value="10">Ekim</option>
+                            <option @Html.Raw(Model.filter[1] == "11" ? "selected" : "") value="11">Kasım</option>
+                            <option @Html.Raw(Model.filter[1] == "12" ? "selected" : "") value="12">Aralık</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 form-controls">
+                    <div>
+                        <h4 style="width:100%;">Yayın </h4>
+                    </div>
+                    <div>
+                        <select name="Edition" >
+                            <option value="">Yayın </option>
+                            @foreach (var item in ViewBag.EditionList)
+                            {
+                                <option @Html.Raw(Model.filter[4]==item.Id.ToString()?"Selected":"") value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 form-controls">
+                    <div>
+                        <h4>Temas Şekli </h4>
+                    </div>
+                    <div>
+                        <select name="ContactType">
+                            <option value="">Temas Şekli</option>
+                            @foreach (var item in ViewBag.ContactTypeList)
+                            {
+                                <option @Html.Raw(Model.filter[7]==item.Id.ToString()?"Selected":"") value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-1" style="float:right;">
+                    <button class="btn" type="submit">Uygula </button>
+                </div>
+               
+            </form>
+            <input type="hidden" name="QueryString" value="@ViewBag.QueryString" />
+            <a href="/Export/ContactReport?@ViewBag.QueryString" class="btn btn-danger label-left btn-export btn-export-contact">
+                <span class="btn-label"><i class="ti-download"></i></span>
+                Excele Aktar
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped mb-md-0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="EditionTypeName">Yayın</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="ContactTypeName">Temas Şekli</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="PressMemberName">Basın Mensubu</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="Notes">Notlar</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="LcvName">LCV</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="participationStatusName">Katılım Durumu</a></th>
+                            <th><a href="#" class="orderby-btn" data-orderbycolumn="ContactDate">Temas Tarihi</a></th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.PagedData.Count; i++)
+                        {
+                            var item = Model.PagedData[i];
+
+                            <tr>
+                                <th scope="row">@(i + 1)</th>
+                                <td>@Html.ActionLink(item.EditionTypeName, "Detail", new { id = item.Id })</td>
+                                @if (item.ContactTypeSubName == " " || item.ContactTypeName == " ")
+                                {
+                                    <td>@Html.ActionLink(" ", "Detail", new { id = item.Id })</td>
+                                }
+                                else
+                                {
+                                <td>@Html.ActionLink(item.ContactTypeName + " - " + @item.ContactTypeSubName, "Detail", new { id = item.Id })</td>
+                                }
+                                <td>@Html.ActionLink(item.PressMemberName, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.Notes.Length>=40 ? item.Notes.Substring(0,40)+"..":item.Notes, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.LcvName, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.participationStatusName, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink(item.ContactDate.ToString("dd/MM/yyyy"), "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink("Sil", "Delete", new { id = item.Id },new {@class = "delete", onclick = "return confirm('Temas kaydını silmek istediğinizden emin misiniz?');" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+@if (Model.PagedData != null)
+{
+            <div class="col-md-5">
+                <div class="dataTables_info">
+                    @Model.PagedData.TotalItemCount Sonuçtan @(Model.PagedData.PageCount <= 0 ?
+                    0 : 1) ile @Model.PagedData.Count() arası gösteriliyor
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers">
+                    @Html.PagedListPager(Model.PagedData, pageNumber => Url.Action("List", new { pageNumber, BeginYear = Model.filter[0], BeginMonth = Model.filter[1], CityId = Model.filter[2], DistrictId = Model.filter[3], Edition = Model.filter[4], TaskId = Model.filter[5], SearchText = Model.filter[6], ContactType=Model.filter[7], orderByColumn = Model.filter[8], OrderType = Model.filter[9] }))
+                </div>
+            </div>
+}
+        </div>
+    </div>
+</div>

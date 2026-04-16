@@ -1,0 +1,140 @@
+﻿@model VehicleDetailModel
+
+@{
+    ViewBag.Title = "Temas Kaydı Ekle/Düzenle";
+    ViewBag.Back = "/Vehicle/List";
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+}
+<style>
+    .particial a {
+        color: red;
+    }
+    .particialnone a{
+        color:yellow;
+    }
+</style>
+<div class="box box-block bg-white">
+    
+    @using (Html.BeginForm(actionName, controllerName, FormMethod.Post))
+    {
+        <form>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Marka)
+                @Html.TextBoxFor(p => p.Marka, new { @class = "form-control control-inputs", @required = "required" })
+                @Html.ValidationMessageFor(model => model.Marka, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Serial)
+                @Html.TextBoxFor(p => p.Serial, new { @class = "form-control control-inputs", @required = "required" })
+                @Html.ValidationMessageFor(model => model.Serial, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Model)
+                @Html.TextBoxFor(p => p.Model, new { @class = "form-control control-inputs", @required = "required" })
+                @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Plate)
+                @Html.TextBoxFor(p => p.Plate, new { @class = "form-control control-inputs", @required = "required" })
+                @Html.ValidationMessageFor(model => model.Plate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(p => p.ModelDate)
+                @Html.TextBoxFor(p => p.ModelDate, new { @class = "form-control control-inputs", @required = "required" })
+                @Html.ValidationMessageFor(model => model.ModelDate, "", new { @class = "text-danger" })
+             </div>
+           
+            @Html.HiddenFor(p => p.Id)
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </form>
+
+        <div style="padding:20px 0;">
+            @Html.Label("Temas Geçmişi", new { @class = "form-control control-inputs", @style = "font-weight: bold;" })
+            <div class="row">
+                @foreach (var item in Model.ContactRecordBackList.ToList())
+                {
+                    if (item.particialName == "Katılmadı")
+                    {
+                        <div class="form-group col-lg-3">
+                            <label class="particial">
+                                @Html.ActionLink(item.firstNamelastName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label class="particial">
+                                @Html.ActionLink(item.EditionName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="particial">
+                                @Html.ActionLink(item.Note.Length>=25?item.Note.Substring(1,25):item.Note, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particial">
+                                @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+
+                            <label class="particial">
+                                @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label class="particial">
+                                @Html.ActionLink(item.date.ToShortDateString(), "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                    }
+                    else 
+                    {
+                        <div class="form-group col-lg-3">
+                            <label>
+                                @Html.ActionLink(item.firstNamelastName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label>
+                                @Html.ActionLink(item.EditionName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label>
+                                @Html.ActionLink(item.Note.Length <= 25 ? item.Note: item.Note.Substring(1, 25) + "..", "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label>
+                                @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+
+                            <label>
+                                @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label>
+                                @Html.ActionLink(item.date.ToShortDateString(), "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="row">
+                <a href="/Export/ContactBackVehicleReport?id=@Model.Id" class="btn btn-danger label-left btn-export btn-export-contactBack" style="@ViewBag.Export">
+                    <span class="btn-label"><i class="ti-download"></i></span>
+                    Excele Aktar
+                </a>
+            </div>
+        </div>
+    }
+</div>

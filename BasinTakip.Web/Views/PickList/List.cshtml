@@ -1,0 +1,48 @@
+﻿@model GenericListOutput<BasinTakip.Domain.Entities.Base.PickList, int>
+
+@{
+    //ViewBag.Title = "Seçmeli Alan Listeleme";
+    Layout = "~/Views/Shared/_ListLayout.cshtml";
+}
+<div class="box box-block bg-white">
+    <div class="dataTables_wrapper form-inline dt-bootstrap4">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped mb-md-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ad</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.PagedData.Count; i++)
+                        {
+                            var item = Model.PagedData[i];
+
+                            <tr>
+                                <th scope="row">@(i + 1)</th>
+                                <td>@Html.ActionLink(item.Name, "Detail", new { id = item.Id })</td>
+                                <td>@Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "delete", onclick = "return confirm('Tür içeriğinin silinmesi halinde ilgili kayıtlarda güncellenme yapılması gerekmektedir.');" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="dataTables_info">
+                    @Model.PagedData.TotalItemCount Sonuçtan @(Model.PagedData.PageCount <= 0 ?
+                    0 : 1) ile @Model.PagedData.Count() arası gösteriliyor
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers">
+                    @Html.PagedListPager(Model.PagedData, pageNumber => Url.Action("List", new { pageNumber }))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

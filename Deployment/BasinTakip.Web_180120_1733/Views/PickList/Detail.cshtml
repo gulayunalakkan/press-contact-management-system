@@ -1,0 +1,28 @@
+﻿@model PickListDetailModel
+
+@{
+    ViewBag.Title = "Seçmeli Alan Ekle/Düzenle";
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+}
+<div class="box box-block bg-white">
+    @using (Html.BeginForm(actionName, controllerName, FormMethod.Post))
+    {
+        <form>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Name)
+                @Html.TextBoxFor(p => p.Name, new { @class = "form-control control-inputs", @required = "required" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.Label("PickList Tür")
+                @Html.DropDownListFor(p => p.CategoryId, Model.PickListCategoryList, new { @class = "form-control control-inputs"})
+            </div>
+        
+            @Html.HiddenFor(p => p.Id)
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </form>
+    }
+</div>

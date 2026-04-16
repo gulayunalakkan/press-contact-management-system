@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{353E39F4-F1CC-4F04-9594-2ADF6C45DCB8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BasinTakip.Domain.Entities</RootNamespace>
+    <AssemblyName>BasinTakip.Domain.Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\BasinTakip.Web\Bin\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstract\ContactRecordResult.cs" />
+    <Compile Include="Abstract\EditionResult.cs" />
+    <Compile Include="Abstract\EventResult.cs" />
+    <Compile Include="Abstract\PersonResult.cs" />
+    <Compile Include="Abstract\ReportInput.cs" />
+    <Compile Include="Abstract\TableReportResult.cs" />
+    <Compile Include="Base\City.cs" />
+    <Compile Include="Base\ContactRecord.cs" />
+    <Compile Include="Base\District.cs" />
+    <Compile Include="Base\Edition.cs" />
+    <Compile Include="Base\Event.cs" />
+    <Compile Include="Base\EventSpecial.cs" />
+    <Compile Include="Base\Firm.cs" />
+    <Compile Include="Base\LoginLog.cs" />
+    <Compile Include="Base\PressMember.cs" />
+    <Compile Include="Base\PickList.cs" />
+    <Compile Include="Base\PickListCategory.cs" />
+    <Compile Include="Base\PressMemberLicense.cs" />
+    <Compile Include="Base\User.cs" />
+    <Compile Include="Base\Vehicle.cs" />
+    <Compile Include="Common\LoginResponseType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BasinTakip.Core.Entities\BasinTakip.Core.Entities.csproj">
+      <Project>{3692876c-9fd4-4d08-b743-0ddfbab3ff6d}</Project>
+      <Name>BasinTakip.Core.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

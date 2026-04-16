@@ -1,0 +1,95 @@
+﻿@{
+
+    var manager = IocManager.Resolve<BasinTakip.Domain.Manager.IAccountManager>();
+
+    var loginResult = (manager.GetLoginName(User.Identity.Name))==null?User.Identity.Name:manager.GetLoginName(User.Identity.Name);
+}
+
+<div class="site-sidebar">
+    <div class="custom-scroll custom-scroll-light">
+        <ul class="sidebar-menu">
+            <li class="menu-title">
+               @loginResult
+              <a href="/Account/Logout" style="color:#fff;float: right;"> <i class="fa fa-sign-out" aria-hidden="true"></i> Çıkış Yap</a> 
+            </li>
+            <li class="menu-title"><a style="color:#fff;" href="/Home/Index">Anasayfa</a> </li>
+
+            <li>
+                <a href="/Person/List" class="waves-effect waves-light list-btn">
+                    <span class="s-icon"><i class="demo-icon icon-basın-personeli"></i></span>
+                    <span class="s-text">Basın Mensupları</span>
+                </a>
+                <a href="/Person/Detail" class="new-btn">Yeni</a>
+            </li>
+            <li>
+                <a href="/ContactRecord/List" class="waves-effect waves-light list-btn">
+                    <span class="s-icon"><i class="icon-temas-kayıtları"></i></span>
+                    <span class="s-text">Temas Kayıtları</span>
+                </a>
+                <a href="/ContactRecord/Detail" class="new-btn">Yeni</a>
+            </li>
+            <li>
+                <a href="/Event/List" class="waves-effect waves-light list-btn">
+                    <span class="s-icon"><i class="icon-etkinlikler"></i></span>
+                    <span class="s-text">Etkinlikler</span>
+                </a>
+                <a href="/Event/Detail" class="new-btn">Yeni</a>
+            </li>
+            <li>
+                <a href="/Edition/List" class="waves-effect waves-light list-btn">
+                    <span class="s-icon"><i class="icon-firmalar"></i></span>
+                    <span class="s-text">Yayınlar</span>
+                </a>
+                <a href="/Edition/Detail" class="new-btn">Yeni</a>
+            </li>
+
+            <li>
+                <a href="/Vehicle/List" class="waves-effect waves-light list-btn">
+                    <span class="s-icon"><i class="fa fa-car" aria-hidden="true"></i></span>
+                    <span class="s-text">Test Araçları</span>
+                </a>
+                <a href="/Vehicle/Detail" class="new-btn">Yeni</a>
+            </li>
+
+            <li class="with-sub">
+                <a href="#" class="waves-effect  waves-light list-btn">
+                    <span class="s-icon"><i class="icon-seçmeli-alanlar"></i></span>
+                    <span class="s-text">Seçmeli Alan Yönetimi</span>
+                </a>
+                <a href="#" class="new-btn">
+                    <span class="s-caret"><i class="fa fa-angle-down"></i></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="/PickList/Filter?CategoryId=2" class="waves-effect  waves-light list-btn list-sub-btn">
+                            <span class="s-icon"><i class="icon-etkinlik-türü"></i></span>
+                            <span class="s-text">Etkinlik Türleri</span>
+                        </a>
+                        <a href="/PickList/Details?CategoryId=2" class="new-btn new-sub-btn">Yeni</a>
+                    </li>
+
+                    <li>
+                        <a href="/PickList/Filter?CategoryId=1" class="waves-effect  waves-light list-btn list-sub-btn">
+                            <span class="s-icon"><i class="fa fa-wpforms"></i></span>
+                            <span class="s-text">Görev Bilgileri</span>
+                        </a>
+                        <a href="/PickList/Details?CategoryId=1" class="new-btn new-sub-btn">Yeni</a>
+                    </li>
+                    <li>
+                        <a href="/PickList/Filter?CategoryId=4" class="waves-effect  waves-light list-btn list-sub-btn">
+                            <span class="s-icon"><i class="icon-yayın-türü"></i></span>
+                            <span class="s-text">Yayın Türleri</span>
+                        </a>
+                        <a href="/PickList/Details?CategoryId=4" class="new-btn new-sub-btn">Yeni</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+
+        <div class="menu-image fixed">
+
+        </div>
+    </div>
+</div>

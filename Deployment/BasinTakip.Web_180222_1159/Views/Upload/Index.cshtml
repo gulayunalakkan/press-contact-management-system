@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script type="text/javascript" src="/content/vendor/jquery/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript">
+        var isFileUploaded = @this.ViewBag.IsFileUploaded;
+        
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            if (isFileUploaded) {
+                if ('@ViewBag.ElementId'=='Path5') {
+                    $('#Avatar', window.opener.document).val('@ViewBag.FilePath');
+                    $('#Avatar',window.opener.document).parent().children(':nth-child(3)').attr('href','@ViewBag.FilePath');
+                }
+                else {
+         $('#@ViewBag.ElementId', window.opener.document).val('@ViewBag.FilePath');
+
+                }
+                $('#@ViewBag.ElementId'+'img', window.opener.document).attr('src','@ViewBag.FilePath'+'?Width=200&height=150');
+
+
+                $('#@ViewBag.ElementId',window.opener.document).parent().children(':nth-child(3)').attr('href','@ViewBag.FilePath');
+                $('#@ViewBag.ElementId',window.opener.document).prev().text('Degistir');
+
+                window.close();
+            }
+            $('input[type="file"]').change(function () {
+                $(this).parents('form').submit();
+            })
+        })
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("Save", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="file1" />
+        <input type="hidden" name="elementId" value="@ViewBag.ElementId" />
+    }
+</body>
+</html>

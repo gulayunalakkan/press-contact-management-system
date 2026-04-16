@@ -1,0 +1,147 @@
+﻿@model  PastContactRecordReportModel
+
+@{
+    ViewBag.Title = "Kurumsal İletişim Basın Temas Takip Sistemi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="box box-block bg-white">
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped mb-md-0">
+                <thead class="table-thead-title">
+                    <tr>
+                        <td colspan="7" style="border:none;padding:0;">Son 6 Ayda Temas Edilmeyen Kişiler </td>
+                        <td colspan="1" style="border:none;text-align:center;">Son Temas Tarihi </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.NoContactPressMemberList)
+            {
+                    <tr>
+                        <td> @Html.ActionLink(item.firstNamelastName, "Detail", "Person", new { id = item.Id }, null) </td>
+                        <td> @Html.ActionLink(item.MobilePhone==null?"-":item.MobilePhone, "Detail", "Person", new { id = item.Id }, null) </td>
+                        <td> @Html.ActionLink(item.Email==null?"-":item.Email, "Detail", "Person", new { id = item.Id }, null) </td>
+                        <td> @Html.ActionLink(item.TaskName==null?"-":item.TaskName, "Detail", "Person", new { id = item.Id }, null) </td>
+                        <td> @Html.ActionLink(item.EditionName==null?"-":item.EditionName, "Detail", "Person", new { id = item.Id }, null) </td>
+                        <td> @Html.ActionLink(item.ContactTypeName==null?"-":item.ContactTypeName, "Detail", "Person", new { id = item.Id }, null) </td>
+                        <td> @Html.ActionLink(item.ContactSubName==null?"-":item.ContactSubName, "Detail", "Person", new { id = item.Id }, null) </td>
+                        <td style="text-align:center;"> @if (item.LastContactDate == null) {@Html.ActionLink("Temas Edilmemiş", "Detail", "Person", new { id = item.Id }, new { @style = "color:red;" })  } else { @Html.ActionLink(item.LastContactDate.Value.ToString("dd/MM/yyyy"), "Detail", "Person", new { id = item.Id }, new { @style = "color:red;" })} </td>
+                    </tr>
+                    }
+
+                </tbody>
+
+            </table>
+            <div class="col-md-12">
+
+                <a href="/Report/ContactReport" style="float:right;margin: 15px 0 10px 0;color:#000000;font-weight:bold;font-size:15px;">Tümünü Görüntüle</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div style="width: 49%;float: left;padding: 0 5px 0 5px;">
+            <div class="" style="background-color: #fff;">
+                <table class="table table-striped mb-md-0">
+                    <thead class="table-thead-title">
+                        <tr>
+                            <td colspan="4">Yaklaşan Etkinlikler </td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UpComingEVentList)
+            {
+                            <tr>
+                                <td> @Html.ActionLink(item.EventName, "Detail", "Event", new { id = item.Id }, null) </td>
+                                <td>@Html.ActionLink(item.EventPlacename, "Detail", "Event", new { id = item.Id }, null)</td>
+                                <td>@Html.ActionLink(item.EventTypeName, "Detail", "Event", new { id = item.Id }, null)</td>
+                                <td>@Html.ActionLink(item.EventDate.ToString("dd/MM/yyyy"), "Detail", "Event", new { id = item.Id }, null) </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+                <div class="" style="width: 100%;float: right;background-color: #fff;">
+
+                    <a href="/Report/EventReport" style="float:right;margin: 15px 0 10px 0;color:#000000;font-weight:bold;font-size:15px;padding-right: 5px;">Tümünü Görüntüle</a>
+                </div>
+            </div>
+        
+            <div class="" style="background-color: #fff;margin-top:10px;float:left;width:100%;">
+                <table class="table table-striped mb-md-0">
+                    <thead class="table-thead-title">
+                        <tr>
+                            <td colspan="4">Doğum Günleri </td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.MountBirthDate != null)
+                        {
+                            foreach (var item in Model.MountBirthDate)
+                            {
+                                <tr>
+                                    <td> @Html.ActionLink(item.firstNamelastName, "Detail", "Event", new { id = item.Id }, null) </td>
+                                    <td>@Html.ActionLink(item.PressMemberBirthDate.Value.ToString("dd/MM/yyyy"), "Detail", "Person", new { id = item.Id }, null) </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td> Bu ay veri yok </td>
+                                
+                            </tr>
+                        }
+
+
+                    </tbody>
+
+                </table>
+                <div class=""  style="width: 100%;float: right;background-color: #fff;">
+
+                    <a href="/Report/mounthlybirthday" style="float:right;margin: 15px 0 10px 0;color:#000000;font-weight:bold;font-size:15px;padding-right:5px;">Tümünü Görüntüle</a>
+                </div>
+            </div>
+        </div>
+        <div style="width: 49%;margin-left: 2%;float: left;background-color: #fff;padding: 0 5px 0 5px;">
+            <div>
+                <table class="table table-striped mb-md-0">
+                    <thead class="table-thead-title">
+                        <tr>
+                            <td colspan="4">Gerçekleşen Son Temaslar </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.HappeningLastContactList)
+            {
+                            <tr>
+                                <td> @Html.ActionLink(item.firstNamelastName, "Detail", "ContactRecord", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.EditionName, "Detail", "ContactRecord", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.EventName, "Detail", "ContactRecord", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.LastContactDate.Value.ToString("dd/MM/yyyy"), "Detail", "ContactRecord", new { id = item.Id }, null) </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+                <div>
+
+                    <a href="/Report/LastContactReport" style="float:right;margin: 15px 0 10px 0;color:#000000;font-weight:bold;font-size:15px;">Tümünü Görüntüle</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+

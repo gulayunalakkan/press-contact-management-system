@@ -1,0 +1,73 @@
+﻿@model EditionDetailModel
+
+@{
+    ViewBag.Title = "Yayın Ekle/Düzenle";
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+}
+
+<div class="box box-block bg-white">
+
+    @using (Html.BeginForm(actionName, controllerName, FormMethod.Post))
+    {
+        <form>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.Name)
+                    @Html.TextBoxFor(p => p.Name, new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+
+                </div>
+                <div class="form-group col-lg-6">
+                    @Html.Label("Yayın Türü")
+                    @Html.DropDownListFor(p => p.EditionTypeId, Model.EditionTypeList,"", new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.EditionTypeId, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+           
+            <div class="form-group">
+                @Html.LabelFor(p => p.Adress)
+                @Html.TextAreaFor(p => p.Adress, new { @class = "form-control control-inputs", @required = "required" })
+                @Html.ValidationMessageFor(model => model.Adress, "", new { @class = "text-danger" })
+
+            </div>
+         
+            @Html.HiddenFor(p => p.Id)
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </form>
+
+        <div style="padding:20px 0;">
+            @Html.Label("Yayına Bağlı Basın Mensupları", new { @class = "form-control control-inputs", @style = "font-weight: bold;" })
+            <div class="row">
+                @foreach (var item in Model.EditionWithPressMember)
+                {
+                   
+                        <div class="form-group col-lg-4">
+                            <label>
+                                @Html.ActionLink(item.firstNamelastName, "Detail", "Person", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                      
+                        <div class="form-group col-lg-4">
+                            <label>
+                                @Html.ActionLink(item.Email, "Detail", "Person", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label>
+                                @Html.ActionLink(item.MobilePhone, "Detail", "Person", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                   
+                }
+        
+            </div>
+        
+        </div>
+    }
+</div>

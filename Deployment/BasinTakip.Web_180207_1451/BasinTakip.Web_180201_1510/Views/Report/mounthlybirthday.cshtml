@@ -1,0 +1,44 @@
+﻿@model PastContactRecordReportModel
+@{
+    ViewBag.Title = "Kurumsal İletişim Basın Temas Takip Sistemi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EventReport</title>
+</head>
+<body>
+    <div class="box box-block bg-white">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped mb-md-0">
+                    <thead class="table-thead-title">
+                        <tr>
+                            <td colspan="4" style="border:none;float:left;padding: 0 5px 12px 0;"> Doğum Günleri  </td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.MountBirthDate)
+                       {
+                            <tr>
+                                <td> @Html.ActionLink(item.firstNamelastName, "Detail", "Person", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.EditionName, "Detail", "Person", new { id = item.Id }, null) </td>
+                                <td>@Html.ActionLink(item.PressMemberBirthDate.Value.ToString("dd/MM/yyyy"), "Detail", "Person", new { id = item.Id }, null) </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

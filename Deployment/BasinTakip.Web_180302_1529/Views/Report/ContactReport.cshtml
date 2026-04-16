@@ -1,0 +1,50 @@
+﻿@model PastContactRecordReportModel
+@{
+    ViewBag.Title= "Kurumsal İletişim Basın Temas Takip Sistemi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ContactReport</title>
+</head>
+<body>
+    <div class="box box-block bg-white">
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped mb-md-0">
+                    <thead class="table-thead-title">
+                        <tr>
+                            <td colspan="7" style="border:none;padding:0;">Son 6 Ayda Temas Edilmeyen Kişiler </td>
+                            <td colspan="1" style="border:none;">Son Temas Tarihi </td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.NoContactPressMemberList)
+            {
+                            <tr>
+                                <td> @Html.ActionLink(item.firstNamelastName, "Detail", "Person", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.MobilePhone == null ? "-" : item.MobilePhone, "Detail", "Person", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.Email == null ? "-" : item.Email, "Detail", "Person", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.TaskName == null ? "-" : item.TaskName, "Detail", "Person", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.EditionName == null ? "-" : item.EditionName, "Detail", "Person", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.ContactTypeName == null ? "-" : item.ContactTypeName, "Detail", "Person", new { id = item.Id }, null) </td>
+                                <td> @Html.ActionLink(item.ContactSubName == null ? "-" : item.ContactSubName, "Detail", "Person", new { id = item.Id }, null) </td>
+                                <td style="text-align:center;"> @if (item.LastContactDate == null)
+                                {@Html.ActionLink("Temas Edilmemiş", "Detail", "Person", new { id = item.Id }, new { @style = "color:red;" })  }
+                                else
+                                { @Html.ActionLink(item.LastContactDate.Value.ToString("dd/MM/yyyy"), "Detail", "Person", new { id = item.Id }, new { @style = "color:red;" })} </td>
+ </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿<!-- Header -->
+<div class="site-header">
+    <nav class="navbar navbar-light">
+        <div class="navbar-left">
+            <a class="navbar-brand" href="/">
+                <div class="logo"></div>
+            </a>
+            <div class="toggle-button dark sidebar-toggle-first float-xs-left hidden-md-up">
+                <span class="hamburger"></span>
+            </div>
+            <div class="toggle-button-second dark float-xs-right hidden-md-up">
+                <i class="ti-arrow-left"></i>
+            </div>
+            <div class="toggle-button dark float-xs-right hidden-md-up" data-toggle="collapse" data-target="#collapse-1">
+                <span class="more"></span>
+            </div>
+        </div>
+        <div class="navbar-right navbar-toggleable-sm collapse">
+            <h5 style="padding:21px 10px;">
+                <a class="backLink" style="color:#3e70c9;cursor:pointer;"> <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                @ViewBag.Title &nbsp; &nbsp;  <a style="color:red;" href="/Person/BlockAdd?id=@ViewBag.BlockPress" onclick="return confirm('@ViewBag.BlockSure')">@ViewBag.Block</a> 
+                <a href="@ViewBag.btnNew" style="float:right;margin-top:-7px; display:none; color:#fff;" class="btn btn-primary w-min-sm mb-0-25 waves-effect waves-light @ViewBag.button">
+                    Ekle &nbsp; <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+                <label style="color:#00a6e5">  @ViewBag.DateTime </label><label>@ViewBag.createDate</label>
+            </h5>
+        </div>
+    </nav>
+</div>

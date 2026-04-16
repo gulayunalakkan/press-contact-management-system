@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{34C06E92-2E69-4D2C-B62D-95BBB9CE9F83}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BasinTakip.EntityFramework</RootNamespace>
+    <AssemblyName>BasinTakip.EntityFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\BaseEntityTypeConfiguration.cs" />
+    <Compile Include="Configuration\CityConfiguration.cs" />
+    <Compile Include="Configuration\ContactRecordConfiguration.cs" />
+    <Compile Include="Configuration\DistrictConfiguration.cs" />
+    <Compile Include="Configuration\EditionConfiguration.cs" />
+    <Compile Include="Configuration\EventSpecialConfiguration.cs" />
+    <Compile Include="Configuration\EventConfiguration.cs" />
+    <Compile Include="Configuration\LoginLogConfiguration.cs" />
+    <Compile Include="Configuration\PickListCategoryConfiguration.cs" />
+    <Compile Include="Configuration\PickListConfiguration.cs" />
+    <Compile Include="Configuration\PressMemberConfiguration.cs" />
+    <Compile Include="Configuration\FirmConfiguration.cs" />
+    <Compile Include="Configuration\PressMemberLicenseConfiguration.cs" />
+    <Compile Include="Configuration\DataHistoryConfiguration.cs" />
+    <Compile Include="Configuration\SearchTableConfiguration.cs" />
+    <Compile Include="Configuration\UserConfiguration.cs" />
+    <Compile Include="Configuration\VehicleConfiguration.cs" />
+    <Compile Include="Context\CommonContext.cs" />
+    <Compile Include="Migrations\201704241531086_InitialCreate.cs" />
+    <Compile Include="Migrations\201704241531086_InitialCreate.Designer.cs">
+      <DependentUpon>201704241531086_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251303272_city.cs" />
+    <Compile Include="Migrations\201704251303272_city.Designer.cs">
+      <DependentUpon>201704251303272_city.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251306195_cityDistrict.cs" />
+    <Compile Include="Migrations\201704251306195_cityDistrict.Designer.cs">
+      <DependentUpon>201704251306195_cityDistrict.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251337062_pressmember.cs" />
+    <Compile Include="Migrations\201704251337062_pressmember.Designer.cs">
+      <DependentUpon>201704251337062_pressmember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251529428_pressmembers.cs" />
+    <Compile Include="Migrations\201704251529428_pressmembers.Designer.cs">
+      <DependentUpon>201704251529428_pressmembers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251634598_data.cs" />
+    <Compile Include="Migrations\201704251634598_data.Designer.cs">
+      <DependentUpon>201704251634598_data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704260803217_mig1.cs" />
+    <Compile Include="Migrations\201704260803217_mig1.Designer.cs">
+      <DependentUpon>201704260803217_mig1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261007593_mig2.cs" />
+    <Compile Include="Migrations\201704261007593_mig2.Designer.cs">
+      <DependentUpon>201704261007593_mig2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261059208_mig3.cs" />
+    <Compile Include="Migrations\201704261059208_mig3.Designer.cs">
+      <DependentUpon>201704261059208_mig3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261140296_ContactEdit.cs" />
+    <Compile Include="Migrations\201704261140296_ContactEdit.Designer.cs">
+      <DependentUpon>201704261140296_ContactEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261154594_mig31.cs" />
+    <Compile Include="Migrations\201704261154594_mig31.Designer.cs">
+      <DependentUpon>201704261154594_mig31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261418325_mig4.cs" />
+    <Compile Include="Migrations\201704261418325_mig4.Designer.cs">
+      <DependentUpon>201704261418325_mig4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261424044_contactrecordedit.cs" />
+    <Compile Include="Migrations\201704261424044_contactrecordedit.Designer.cs">
+      <DependentUpon>201704261424044_contactrecordedit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704271254512_contactrecordedits.cs" />
+    <Compile Include="Migrations\201704271254512_contactrecordedits.Designer.cs">
+      <DependentUpon>201704271254512_contactrecordedits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704280833178_mig6.cs" />
+    <Compile Include="Migrations\201704280833178_mig6.Designer.cs">
+      <DependentUpon>201704280833178_mig6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704280842121_pressmembereditt.cs" />
+    <Compile Include="Migrations\201704280842121_pressmembereditt.Designer.cs">
+      <DependentUpon>201704280842121_pressmembereditt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704281055480_pressmembercountry.cs" />
+    <Compile Include="Migrations\201704281055480_pressmembercountry.Designer.cs">
+      <DependentUpon>201704281055480_pressmembercountry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705031220198_contactdate.cs" />
+    <Compile Include="Migrations\201705031220198_contactdate.Designer.cs">
+      <DependentUpon>201705031220198_contactdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040753024_migContactDate.cs" />
+    <Compile Include="Migrations\201705040753024_migContactDate.Designer.cs">
+      <DependentUpon>201705040753024_migContactDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041105265_migContactRecordDate.cs" />
+    <Compile Include="Migrations\201705041105265_migContactRecordDate.Designer.cs">
+      <DependentUpon>201705041105265_migContactRecordDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041324287_migContactKind.cs" />
+    <Compile Include="Migrations\201705041324287_migContactKind.Designer.cs">
+      <DependentUpon>201705041324287_migContactKind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041432447_migContactRecordNullable.cs" />
+    <Compile Include="Migrations\201705041432447_migContactRecordNullable.Designer.cs">
+      <DependentUpon>201705041432447_migContactRecordNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041641542_migRequiredEdits.cs" />
+    <Compile Include="Migrations\201705041641542_migRequiredEdits.Designer.cs">
+      <DependentUpon>201705041641542_migRequiredEdits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041651062_migpress.cs" />
+    <Compile Include="Migrations\201705041651062_migpress.Designer.cs">
+      <DependentUpon>201705041651062_migpress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041654495_migpressRequired.cs" />
+    <Compile Include="Migrations\201705041654495_migpressRequired.Designer.cs">
+      <DependentUpon>201705041654495_migpressRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041657140_editss.cs" />
+    <Compile Include="Migrations\201705041657140_editss.Designer.cs">
+      <DependentUpon>201705041657140_editss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705051343046_migGender.cs" />
+    <Compile Include="Migrations\201705051343046_migGender.Designer.cs">
+      <DependentUpon>201705051343046_migGender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705090834122_migPickList.cs" />
+    <Compile Include="Migrations\201705090834122_migPickList.Designer.cs">
+      <DependentUpon>201705090834122_migPickList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705091156550_migImg.cs" />
+    <Compile Include="Migrations\201705091156550_migImg.Designer.cs">
+      <DependentUpon>201705091156550_migImg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705091209225_migg.cs" />
+    <Compile Include="Migrations\201705091209225_migg.Designer.cs">
+      <DependentUpon>201705091209225_migg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705101643154_migc.cs" />
+    <Compile Include="Migrations\201705101643154_migc.Designer.cs">
+      <DependentUpon>201705101643154_migc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705101658344_migg2.cs" />
+    <Compile Include="Migrations\201705101658344_migg2.Designer.cs">
+      <DependentUpon>201705101658344_migg2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705181303433_EventCalendar.cs" />
+    <Compile Include="Migrations\201705181303433_EventCalendar.Designer.cs">
+      <DependentUpon>201705181303433_EventCalendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705181450483_editeventCalendar-eventSpecial.cs" />
+    <Compile Include="Migrations\201705181450483_editeventCalendar-eventSpecial.Designer.cs">
+      <DependentUpon>201705181450483_editeventCalendar-eventSpecial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705181544098_eventSpecialEdit.cs" />
+    <Compile Include="Migrations\201705181544098_eventSpecialEdit.Designer.cs">
+      <DependentUpon>201705181544098_eventSpecialEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705220827078_pressmember-avatar.cs" />
+    <Compile Include="Migrations\201705220827078_pressmember-avatar.Designer.cs">
+      <DependentUpon>201705220827078_pressmember-avatar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705221441531_SearchTable.cs" />
+    <Compile Include="Migrations\201705221441531_SearchTable.Designer.cs">
+      <DependentUpon>201705221441531_SearchTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705240902536_pressdb.cs" />
+    <Compile Include="Migrations\201705240902536_pressdb.Designer.cs">
+      <DependentUpon>201705240902536_pressdb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705241016005_presseditt.cs" />
+    <Compile Include="Migrations\201705241016005_presseditt.Designer.cs">
+      <DependentUpon>201705241016005_presseditt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705261430169_migpressmember.cs" />
+    <Compile Include="Migrations\201705261430169_migpressmember.Designer.cs">
+      <DependentUpon>201705261430169_migpressmember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705300752103_migrat1.cs" />
+    <Compile Include="Migrations\201705300752103_migrat1.Designer.cs">
+      <DependentUpon>201705300752103_migrat1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706010817069_migRevize.cs" />
+    <Compile Include="Migrations\201706010817069_migRevize.Designer.cs">
+      <DependentUpon>201706010817069_migRevize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706011121050_migevent.cs" />
+    <Compile Include="Migrations\201706011121050_migevent.Designer.cs">
+      <DependentUpon>201706011121050_migevent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706061049530_mignew.cs" />
+    <Compile Include="Migrations\201706061049530_mignew.Designer.cs">
+      <DependentUpon>201706061049530_mignew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706061239161_DataHistory2.cs" />
+    <Compile Include="Migrations\201706061239161_DataHistory2.Designer.cs">
+      <DependentUpon>201706061239161_DataHistory2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706281109553_LoginLog.cs" />
+    <Compile Include="Migrations\201706281109553_LoginLog.Designer.cs">
+      <DependentUpon>201706281109553_LoginLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706281144372_miglog.cs" />
+    <Compile Include="Migrations\201706281144372_miglog.Designer.cs">
+      <DependentUpon>201706281144372_miglog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711230855451_migContactandEdition.cs" />
+    <Compile Include="Migrations\201711230855451_migContactandEdition.Designer.cs">
+      <DependentUpon>201711230855451_migContactandEdition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711230921144_edition.cs" />
+    <Compile Include="Migrations\201711230921144_edition.Designer.cs">
+      <DependentUpon>201711230921144_edition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711231021316_guncelleme.cs" />
+    <Compile Include="Migrations\201711231021316_guncelleme.Designer.cs">
+      <DependentUpon>201711231021316_guncelleme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711231129155_migUpdate2311.cs" />
+    <Compile Include="Migrations\201711231129155_migUpdate2311.Designer.cs">
+      <DependentUpon>201711231129155_migUpdate2311.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202602081409380_AddUserTable.cs" />
+    <Compile Include="Migrations\202602081409380_AddUserTable.Designer.cs">
+      <DependentUpon>202602081409380_AddUserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repository\CityRepository.cs" />
+    <Compile Include="Repository\ContactRecordRepository.cs" />
+    <Compile Include="Repository\DistrictRepository.cs" />
+    <Compile Include="Repository\EditionRepository.cs" />
+    <Compile Include="Repository\EventCalendarRepository.cs" />
+    <Compile Include="Repository\EventRepository.cs" />
+    <Compile Include="Repository\FirmRepository.cs" />
+    <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\LoginLogRepository.cs" />
+    <Compile Include="Repository\PersonRepository.cs" />
+    <Compile Include="Repository\PickListCategoryRepository.cs" />
+    <Compile Include="Repository\PickListRepository.cs" />
+    <Compile Include="Repository\DataHistoryRepository.cs" />
+    <Compile Include="Repository\SearchTableRepository.cs" />
+    <Compile Include="Repository\VehicleRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BasinTakip.Core.Entities\BasinTakip.Core.Entities.csproj">
+      <Project>{3692876c-9fd4-4d08-b743-0ddfbab3ff6d}</Project>
+      <Name>BasinTakip.Core.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BasinTakip.Core\BasinTakip.Core.csproj">
+      <Project>{7927a147-33c6-413b-a8e8-1285d0305ccd}</Project>
+      <Name>BasinTakip.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BasinTakip.Domain.Entities\BasinTakip.Domain.Entities.csproj">
+      <Project>{353e39f4-f1cc-4f04-9594-2adf6c45dcb8}</Project>
+      <Name>BasinTakip.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BasinTakip.Domain\BasinTakip.Domain.csproj">
+      <Project>{e2587cb2-50c6-4f16-88c4-c81dbc5a4985}</Project>
+      <Name>BasinTakip.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704241531086_InitialCreate.resx">
+      <DependentUpon>201704241531086_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251303272_city.resx">
+      <DependentUpon>201704251303272_city.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251306195_cityDistrict.resx">
+      <DependentUpon>201704251306195_cityDistrict.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251337062_pressmember.resx">
+      <DependentUpon>201704251337062_pressmember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251529428_pressmembers.resx">
+      <DependentUpon>201704251529428_pressmembers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251634598_data.resx">
+      <DependentUpon>201704251634598_data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704260803217_mig1.resx">
+      <DependentUpon>201704260803217_mig1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261007593_mig2.resx">
+      <DependentUpon>201704261007593_mig2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261059208_mig3.resx">
+      <DependentUpon>201704261059208_mig3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261140296_ContactEdit.resx">
+      <DependentUpon>201704261140296_ContactEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261154594_mig31.resx">
+      <DependentUpon>201704261154594_mig31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261418325_mig4.resx">
+      <DependentUpon>201704261418325_mig4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261424044_contactrecordedit.resx">
+      <DependentUpon>201704261424044_contactrecordedit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271254512_contactrecordedits.resx">
+      <DependentUpon>201704271254512_contactrecordedits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704280833178_mig6.resx">
+      <DependentUpon>201704280833178_mig6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704280842121_pressmembereditt.resx">
+      <DependentUpon>201704280842121_pressmembereditt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704281055480_pressmembercountry.resx">
+      <DependentUpon>201704281055480_pressmembercountry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705031220198_contactdate.resx">
+      <DependentUpon>201705031220198_contactdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040753024_migContactDate.resx">
+      <DependentUpon>201705040753024_migContactDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041105265_migContactRecordDate.resx">
+      <DependentUpon>201705041105265_migContactRecordDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041324287_migContactKind.resx">
+      <DependentUpon>201705041324287_migContactKind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041432447_migContactRecordNullable.resx">
+      <DependentUpon>201705041432447_migContactRecordNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041641542_migRequiredEdits.resx">
+      <DependentUpon>201705041641542_migRequiredEdits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041651062_migpress.resx">
+      <DependentUpon>201705041651062_migpress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041654495_migpressRequired.resx">
+      <DependentUpon>201705041654495_migpressRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041657140_editss.resx">
+      <DependentUpon>201705041657140_editss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705051343046_migGender.resx">
+      <DependentUpon>201705051343046_migGender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705090834122_migPickList.resx">
+      <DependentUpon>201705090834122_migPickList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705091156550_migImg.resx">
+      <DependentUpon>201705091156550_migImg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705091209225_migg.resx">
+      <DependentUpon>201705091209225_migg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705101643154_migc.resx">
+      <DependentUpon>201705101643154_migc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705101658344_migg2.resx">
+      <DependentUpon>201705101658344_migg2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705181303433_EventCalendar.resx">
+      <DependentUpon>201705181303433_EventCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705181450483_editeventCalendar-eventSpecial.resx">
+      <DependentUpon>201705181450483_editeventCalendar-eventSpecial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705181544098_eventSpecialEdit.resx">
+      <DependentUpon>201705181544098_eventSpecialEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705220827078_pressmember-avatar.resx">
+      <DependentUpon>201705220827078_pressmember-avatar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705221441531_SearchTable.resx">
+      <DependentUpon>201705221441531_SearchTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705240902536_pressdb.resx">
+      <DependentUpon>201705240902536_pressdb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705241016005_presseditt.resx">
+      <DependentUpon>201705241016005_presseditt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705261430169_migpressmember.resx">
+      <DependentUpon>201705261430169_migpressmember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705300752103_migrat1.resx">
+      <DependentUpon>201705300752103_migrat1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706010817069_migRevize.resx">
+      <DependentUpon>201706010817069_migRevize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706011121050_migevent.resx">
+      <DependentUpon>201706011121050_migevent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061239161_DataHistory2.resx">
+      <DependentUpon>201706061239161_DataHistory2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061049530_mignew.resx">
+      <DependentUpon>201706061049530_mignew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706281109553_LoginLog.resx">
+      <DependentUpon>201706281109553_LoginLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706281144372_miglog.resx">
+      <DependentUpon>201706281144372_miglog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711230855451_migContactandEdition.resx">
+      <DependentUpon>201711230855451_migContactandEdition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711230921144_edition.resx">
+      <DependentUpon>201711230921144_edition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711231021316_guncelleme.resx">
+      <DependentUpon>201711231021316_guncelleme.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711231129155_migUpdate2311.resx">
+      <DependentUpon>201711231129155_migUpdate2311.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202602081409380_AddUserTable.resx">
+      <DependentUpon>202602081409380_AddUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+</Project>

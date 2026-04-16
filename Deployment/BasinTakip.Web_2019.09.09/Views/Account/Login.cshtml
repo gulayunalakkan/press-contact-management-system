@@ -1,0 +1,109 @@
+﻿@model LoginViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Log in";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.Partial("Partial/Meta")
+    <link href="~/Content/css/styles.css" rel="stylesheet" />
+    
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+</head>
+
+<body style="background:url(/Content/img/background-1[1590].jpg) center #000">
+    <div style="width:100%;height:100%;z-index:1;">
+
+        <section id="loginForm" style="height:100%;">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div id="lglogin" class="container-fluid login">
+                    <div class="black" style="background-color: rgba(0, 0, 0, 0.88);"></div>
+                    <div class="lg-logo">
+                      
+                    </div>
+                    <div class="container">
+                        <div class="loginScreen">
+                            <div class="col-lg-5 login-left">
+                                <div role="form" class="form-horizontal">
+                                    <h3>ÜYE GİRİŞİ</h3>
+                                 
+                                    <div class="form-group user">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Kullanıcı adı", @AUTOCOMPLETE = "off" })
+                                       
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" }) <br />
+                                    <div class="form-group password">
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Şifre", @AUTOCOMPLETE = "off" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                   <label class="text-danger"> @ViewBag.ErrorsUser</label>
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    
+                                   
+                                    <table>
+
+                                        <tr>
+
+                                            <td colspan="3">
+                                                <img src="@Url.Action("capthaGetir")" title="DOĞRULAMA KODU" />
+                                            </td>
+
+                                        </tr>
+
+
+                                        <tr>
+
+                                            <td>
+                                                @Html.LabelFor(m => m.Captcha) :
+                                            </td>
+
+
+                                            <td>
+                                                @Html.TextBoxFor(m => m.Captcha, new { @style = "padding: 5px;border: 1px solid #fff !important;", @maxlength = "10" })
+                                            </td>
+
+
+                                            <td>
+                                                @Html.ValidationMessageFor(m => m.Captcha)
+                                            </td>
+
+                                        </tr>
+
+
+
+                                    </table>
+                                    
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-login">Giriş</button>
+                                    </div>
+                                   
+                                </div>
+                                <div style="clear:both;"></div>
+
+                            </div>
+                            <div class="col-lg-7 login-right hidden-xs">
+                                <h2>Mercedes-Benz Türk <span>Basın Temas Takip Sistemi'ne Hoşgeldiniz</span></h2>
+                                <p class="loginDescription">
+
+                                </p>
+                                <div class="black"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </section>
+
+    </div>
+            @Html.Partial("Partial/Scripts")
+</body>
+</html>

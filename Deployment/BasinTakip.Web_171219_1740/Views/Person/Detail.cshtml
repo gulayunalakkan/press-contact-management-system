@@ -1,0 +1,325 @@
+﻿@model PressMemberDetailModel
+
+@{
+    ViewBag.Title = "Basın Mensubu Ekle/Düzenle";
+    Layout = "~/Views/Shared/_DetailLayout.cshtml";
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+}
+<script type="text/javascript" src="~/Content/js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="~/Content/js/jquery.tokenize.js"></script>
+<script>
+    $('#SelectedValues').multipleSelect();
+</script>
+<style>
+    .particial a {
+        color: red;
+    }
+    .particialnone{
+        color:yellow;
+    }
+</style>
+<link href="~/Content/css/jquery.fancybox-1.3.4.css" rel="stylesheet" />
+<div class="box box-block bg-white">
+
+    @using (Html.BeginForm("DetailPressMember", controllerName, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+        <form>
+            
+            <div class="row">
+                @Html.HiddenFor(p => p.Block)
+                <div class="form-group col-lg-2 avatar-img">
+                    @Html.HiddenFor(p => p.Avatar)
+                    <a href="#" class="btn btn-primary btn-file-upload" data-elementid="path5" style="visibility:hidden;">Düzenle</a>
+                    @*<a href="@Html.ToRelativeUri(Model.Avatar)" style="visibility:visible;" id="exa" class="imgLarge"><i class="fa fa-search-plus" aria-hidden="true"></i></a>*@
+                    @if (Model.Avatar == null)
+                    {
+                     <img src="~/Content/img/Default.png?Width=200&height=150" alt="Alternate Text" id="Path5img" />
+                    }
+                    else
+                    {
+                        <img src="@Html.ToRelativeUri(Model.Avatar)?Width=200&height=150" alt="Alternate Text" id="Path5img" />
+                    }
+
+                </div>
+                <div class="form-group col-lg-5" style="padding-top: 22px;">
+                    @Html.LabelFor(p => p.FirstName)
+                    @Html.TextBoxFor(p => p.FirstName, new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-lg-5" style="padding-top: 22px;">
+                    @Html.LabelFor(p => p.LastName)
+                    @Html.TextBoxFor(p => p.LastName, new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-5">
+                    @Html.LabelFor(p => p.EditionId)
+                    @*@Html.DropDownListFor(p => p.editionlist,(MultiSelectList)ViewBag.EditionList, "", new { @class = "form-control control-inputs", @required = "required",multiple="multiple" })
+                    @Html.ValidationMessageFor(model => model.EditionId, "", new { @class = "text-danger" })*@
+
+                   @*@Html.DropDownList("SelectedValues", (MultiSelectList)ViewBag.EditionList, new { multiple = "multiple" })*@
+                    @Html.ListBoxFor(s => s.SelectedValues, (MultiSelectList)ViewBag.EditionList,new { @class = "form-control control-inputs edition", @required = "required", multiple="multiple" })
+
+                </div>
+                <div class="form-group col-lg-1">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        @Html.LabelFor(p => p.TaskId)
+                        @Html.DropDownListFor(p => p.TaskId, Model.TaskList, "", new { @class = "form-control control-inputs", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.TaskId, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+            <div class="row">
+
+                <div class="form-group col-lg-4">
+                    @Html.LabelFor(p => p.MobilePhone)
+                    @Html.TextBoxFor(p => p.MobilePhone, new { @class = "form-control control-inputs bfh-phone " })
+                    @*<input type="text" name="MobilePhone"  class="form-control control-inputs bfh-phone" id="MobilePhone" data-format="0(ddd) ddd-dddd" value='@Model.MobilePhone' required="required">*@
+                    @Html.ValidationMessageFor(m => m.MobilePhone, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-lg-4">
+                    @Html.LabelFor(p => p.BirthDate)
+                    @if (Model.BirthDate == DateTime.MinValue)
+                    {
+                        @Html.TextBoxFor(p => p.BirthDate, "{0:dd.MM.yyyy}", new { Value = "", @class = "form-control mydatepicker control-inputs" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(p => p.BirthDate, "{0:dd.MM.yyyy}", new { @class = "form-control mydatepicker control-inputs" })
+                    }
+                </div>
+
+                <div class="form-group col-lg-4">
+                    @Html.LabelFor(p => p.CountryId)
+                    @Html.DropDownListFor(p => p.CountryId, Model.CountryList, "", new { @class = "form-control control-inputs countrySelect" })
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-4">
+                    @Html.LabelFor(p => p.Email)
+                    @Html.TextBoxFor(p => p.Email, new { @class = "form-control control-inputs "+ViewBag.duplicate + "" , @type = "email" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group col-lg-4">
+                    @Html.LabelFor(p => p.Email2)
+                    @Html.TextBoxFor(p => p.Email2, new { @class = "form-control control-inputs" })
+                </div>
+                <div class="form-group col-lg-4">
+                    @Html.LabelFor(p => p.DistrictId)
+                    @Html.DropDownListFor(p => p.DistrictId, Model.DistrictList, "", new
+               {
+                   @class = "form-control control-inputs ",
+                   @required = "required",
+                   dataUrl = "/api/common/getDistrictList",
+                   dependedElement = "#CountryId",
+
+
+               })
+                    @Html.ValidationMessageFor(model => model.DistrictId, "", new { @class = "text-danger" })
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.Adress)
+                    @Html.TextAreaFor(p => p.Adress, new { @class = "form-control control-inputs", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.Adress, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-lg-6">
+                    @Html.LabelFor(p => p.About)
+                    @Html.TextAreaFor(p => p.About, new { @class = "form-control control-inputs" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    @Html.LabelFor(p => p.Notes)
+                    @Html.TextAreaFor(p => p.Notes, new { @class = "form-control control-inputs form-control-textarea" })
+                </div>
+            </div>
+            <div class="row ImgControls">
+                <div class="form-group col-lg-3" id="Path1Control1">
+                    @if (Model.Path1 == null)
+                    {
+                        <a href="#" class="btn btn-primary btn-file-upload" data-elementid="path1" style="visibility:hidden;">Görsel Ekle</a>
+                        @Html.HiddenFor(p => p.Path1)
+                        <a href="@Html.ToRelativeUri(Model.Path1)" style="visibility:hidden;" id="exa" class="imgLarge"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                        <img src="~/Content/img/Default.png?Width=200&height=150" alt="Alternate Text" id="Path1img" />
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-primary btn-file-upload" data-elementid="path1" style="visibility:hidden;">Görsel Ekle</a>
+                        @Html.HiddenFor(p => p.Path1)
+                        <a href="@Html.ToRelativeUri(Model.Path1)" style="visibility:hidden;" id="exa" class="imgLarge"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                        <img src="@Html.ToRelativeUri(Model.Path1)?Width=200&height=150" alt="Alternate Text" id="Path1img" />
+                    }
+                </div>
+
+                <div class="form-group col-lg-3" id="Path1Control2">
+
+                    @if (Model.Path2 == null)
+                    {
+                        <a href="#" class="btn btn-primary btn-file-upload" data-elementid="path2" style="visibility:hidden;">Görsel Ekle</a>
+                        @Html.HiddenFor(p => p.Path2)
+                        <a href="@Html.ToRelativeUri(Model.Path2)" style="visibility:hidden;" class="imgLarge" id="exa" data-elementid="path2"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                        <img src="~/Content/img/Default.png?Width=200&height=150" alt="Alternate Text" id="Path2img" />
+                    }
+                    else
+                    {  <a href="#" class="btn btn-primary btn-file-upload" data-elementid="path2" style="visibility:hidden;">Görsel Ekle</a>
+                    @Html.HiddenFor(p => p.Path2)
+                        <a href="@Html.ToRelativeUri(Model.Path2)" style="visibility:hidden;" class="imgLarge" id="exa" data-elementid="path2"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+
+                        <img src="@Html.ToRelativeUri(Model.Path2)?Width=200&height=150" alt="Alternate Text" id="Path2img" />
+                    }
+
+                </div>
+
+                <div class="form-group col-lg-3" id="Path1Control3">
+                    @if (Model.Path3 == null)
+                    {
+                        <a href="#" class="btn btn-primary btn-file-upload" data-elementid="path3" style="visibility:hidden;">Görsel Ekle</a>
+                        @Html.HiddenFor(p => p.Path3)
+                        <a href="@Html.ToRelativeUri(Model.Path3)" style="visibility:hidden;" class="imgLarge" id="exa" data-elementid="path3"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                        <img src="~/Content/img/Default.png?Width=200&height=150" alt="Alternate Text" id="Path3img" />
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-primary btn-file-upload" data-elementid="path3" style="visibility:hidden;">Görsel Ekle</a>
+                        @Html.HiddenFor(p => p.Path3)
+                        <a href="@Html.ToRelativeUri(Model.Path3)" style="visibility:hidden;" class="imgLarge" id="exa" data-elementid="path3"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+
+                        <img src="@Html.ToRelativeUri(Model.Path3)?Width=200&height=150" alt="Alternate Text" id="Path3img" />
+                    }
+
+                </div>
+
+                <div class="form-group col-lg-3" id="Path1Control4">
+                    @if (Model.Path4 == null)
+                    {
+                        <a href="#" class="btn btn-primary btn-file-upload" data-elementid="path4" style="visibility:hidden;">Görsel Ekle</a>
+                        @Html.HiddenFor(p => p.Path4)
+                        <a href="@Html.ToRelativeUri(Model.Path4)" style="visibility:hidden;" class="imgLarge" id="exa" data-elementid="path4"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+
+                        <img src="~/Content/img/Default.png?Width=200&height=150" alt="Alternate Text" id="Path4img" />
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-primary btn-file-upload" data-elementid="path4" style="visibility:hidden;">Görsel Ekle</a>
+                        @Html.HiddenFor(p => p.Path4)
+                        <a href="@Html.ToRelativeUri(Model.Path4)" style="visibility:hidden;" class="imgLarge" id="exa" data-elementid="path4"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+
+                        <img src="@Html.ToRelativeUri(Model.Path4)?Width=200&height=150" alt="Alternate Text" id="Path4img" />
+                    }
+
+                </div>
+
+            </div>
+
+            @Html.HiddenFor(p => p.Id)
+            <button type="submit" class="btn btn-primary" id="btnkaydet" style="margin-top: 5%;">Kaydet</button>
+          
+        </form>
+        <label id="errorMail" style="color:red;">  </label>
+
+
+        <div style="padding:20px 0; font-size:10px !important;">
+            @Html.Label("Temas Geçmişi", new { @class = "form-control control-inputs", @style = "font-weight: bold;" })
+            <div class="row">
+                @foreach (var item in Model.ContactRecordBackList.ToList())
+                {
+                    if (item.particialName == "Katıldı")
+                    {
+                    <div class="form-group col-lg-5">
+                        <label>
+                            @Html.ActionLink(item.ContactBackName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                        </label>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>  @Html.ActionLink(item.firstNamelastName, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>   @Html.ActionLink(item.Note, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <label>   @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <label>   @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                    </div>
+                    <div class="form-group col-lg-1">
+                        <label>  @Html.ActionLink(item.date.ToString("dd/MM/yyyy"), "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                    </div>
+                    }
+                }
+                @foreach (var item in Model.ContactRecordBackList.ToList())
+                {
+                    if (item.particialName == "Katılmadı")
+                    {
+                        <div class="form-group col-lg-4">
+                            <label class="particial">
+                                @Html.ActionLink(item.ContactBackName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label class="particial">  @Html.ActionLink(item.firstNamelastName, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="particial">   @Html.ActionLink(item.Note, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particial">  @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particial">  @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particial">  @Html.ActionLink(item.date.ToString("dd/MM/yyyy"), "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                    }
+                }
+                @foreach (var item in Model.ContactRecordBackList.ToList())
+                {
+                    if (item.particialName != "Katılmadı" && item.particialName!="Katıldı")
+                    {
+                        <div class="form-group col-lg-4">
+                            <label class="particialnone">
+                                @Html.ActionLink(item.ContactBackName, "Detail", "ContactRecord", new { id = item.Id }, null)
+                            </label>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label class="particialnone">  @Html.ActionLink(item.firstNamelastName, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="particialnone">   @Html.ActionLink(item.Note, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particialnone">  @Html.ActionLink(item.lcvName, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particialnone">  @Html.ActionLink(item.particialName, "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                        <div class="form-group col-lg-1">
+                            <label class="particialnone">  @Html.ActionLink(item.date.ToString("dd/MM/yyyy"), "Detail", "ContactRecord", new { id = item.Id }, null) </label>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="row">
+                <a href="/Export/ContactBackPressmemberReport?id=@Model.Id" class="btn btn-danger label-left btn-export btn-export-contactBack" style="@ViewBag.Export">
+                    <span class="btn-label"><i class="ti-download"></i></span>
+                    Excele Aktar
+                </a>
+            </div>
+
+        </div>
+    }
+</div>
